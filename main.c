@@ -1,24 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct pile {
+    char tableau[100] ;
+    int p ;                   // Indice de la premiere case utilisable
+} ;
 
-void hanoi( int n, int depart, int fin ) {     // Pour deplacer n disques depuis depart vers fin EN RESPECTANT LES REGLES
-    if ( n == 1 ) 
-        printf("%d => %d\n", depart, fin ) ;
-    else {
-        hanoi( n-1, depart, 6 - depart - fin ) ;
-        hanoi( 1, depart, fin ) ;
-        hanoi ( n-1, 6-depart-fin, fin ) ;
-    }
+void push( struct pile* S, char K ) {
+    S->tableau[S->p] = K ;
+    S->p++ ;
 }
 
-// -----------------
-
+char pop( struct pile* S) {
+    int resultat = S->tableau[S->p-1] ;
+    S->p = S->p-1 ;
+    return resultat ;
+}
 
 int main() {
+    struct pile mapile ;
+    mapile.p = 0 ;
 
-    hanoi ( 3, 1, 3 ) ;
-
+    char resultat ;
+    
+    push( &mapile, 'A' ) ;
+    push( &mapile, 'Z' ) ;
+    push( &mapile, 'T' ) ;
+    
+    resultat = pop( &mapile ) ;
+    
+    push( &mapile, 'X') ;
+    resultat = pop( &mapile ) ;
+    
     return 0 ;
 }
+
 
