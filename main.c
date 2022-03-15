@@ -1,36 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct pile {
-    char tableau[100] ;
+struct file {
+    char tableau[10] ;
     int p ;                   // Indice de la premiere case utilisable
+    int q ;
 } ;
 
-void push( struct pile* S, char K ) {
+void push( struct file* S, char K ) {
     S->tableau[S->p] = K ;
     S->p++ ;
+    if ( S->p == 10 )
+        S->p = 0 ;
+
 }
 
-char pop( struct pile* S) {
-    int resultat = S->tableau[S->p-1] ;
-    S->p = S->p-1 ;
+char pop( struct file* S) {
+    int resultat = S->tableau[S->q] ;
+    S->q = S->q+1 ;
     return resultat ;
 }
 
 int main() {
-    struct pile mapile ;
-    mapile.p = 0 ;
+    struct file mafile ;
+    mafile.p = 0 ;
+    mafile.q = 0 ;
 
     char resultat ;
+    push( &mafile, 'A' ) ;
+    push( &mafile, 'Z' ) ;
     
-    push( &mapile, 'A' ) ;
-    push( &mapile, 'Z' ) ;
-    push( &mapile, 'T' ) ;
+    resultat = pop( &mafile ) ;
     
-    resultat = pop( &mapile ) ;
-    
-    push( &mapile, 'X') ;
-    resultat = pop( &mapile ) ;
+    push( &mafile, 'T' ) ;
+    push( &mafile, 'X') ;
+    resultat = pop( &mafile ) ;
     
     return 0 ;
 }
